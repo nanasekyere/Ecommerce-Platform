@@ -17,10 +17,21 @@ CREATE TABLE products (
     price DECIMAL(10, 2) NOT NULL,
     stock INTEGER NOT NULL DEFAULT 0,
     image_url VARCHAR(255),
+    category TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT positive_price CHECK (price >= 0),
-    CONSTRAINT positive_stock CHECK (stock >= 0)
+    CONSTRAINT positive_stock CHECK (stock >= 0),
+    CONSTRAINT valid_category CHECK (category IN (
+        'Electronics',
+        'Clothing',
+        'Books',
+        'Home & Garden',
+        'Sports',
+        'Toys',
+        'Food & Beverages',
+        'Beauty'
+    ))
 );
 
 -- Cart items table
