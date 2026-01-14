@@ -5,7 +5,7 @@ const { checkUser, getUserById } = require('../db/queries/user')
 
 passport.use(new LocalStrategy(async function(username, password, done) {
   try {
-    const user = await getUser(username)
+    const user = await checkUser(username)
 
     if (!user) return done(null, false, { message: 'Incorrect username or password' });
 
@@ -32,3 +32,15 @@ passport.deserializeUser(async (id, done) => {
     done(error)
   }
 })
+
+const requireAuth = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      status: 401,
+      error: 'Authentication required'
+    });
+  }
+  next();
+};
+
+module.exports = { requireAuth };

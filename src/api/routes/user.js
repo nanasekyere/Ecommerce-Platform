@@ -1,18 +1,21 @@
 const express = require('express');
-const user = require('../services/user');
+const userService = require('../services/user');
 
 const router = new express.Router();
+const { requireAuth } = require('../../config/passport');
+
 
 
 /**
  * Get the current user's profile
  */
-router.get('/', async (req, res, next) => {
+router.get('/', requireAuth, async (req, res, next) => {
   const options = {
+    id: req.user.id
   };
 
   try {
-    const result = await user.getUser(options);
+    const result = await userService.getUser(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     next(err);
@@ -22,13 +25,14 @@ router.get('/', async (req, res, next) => {
 /**
  * Update current user's profile information
  */
-router.put('/', async (req, res, next) => {
+router.put('/', requireAuth, async (req, res, next) => {
   const options = {
-    body: req.body
-  };
+    ...req.body,
+    userId: req.user.id
+  }
 
   try {
-    const result = await user.putUser(options);
+    const result = await userService.putUser(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     next(err);
@@ -43,7 +47,7 @@ router.delete('/', async (req, res, next) => {
   };
 
   try {
-    const result = await user.deleteUser(options);
+    const result = await userService.deleteUser(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     next(err);
