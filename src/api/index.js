@@ -6,10 +6,21 @@ const logger = require('../lib/logger');
 
 const log = logger(config.logger);
 const app = express();
+const session = require('express-session');
+const pool = require('../../db/pool');
+const pgSession = require('connect-pg-simple')(session)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: new pgSession({
+    pool, tableName: 'sessions', createTableIfMissing: true
+  })
+}))
 
 /*
  * Routes
