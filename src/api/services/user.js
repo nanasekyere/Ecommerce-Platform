@@ -6,19 +6,13 @@ module.exports.getUser = async (options) => {
   try {
     const {id} = options
     if (!id) {
-      throw new ServerError({
-        status: 401,
-        error: "User ID is required",
-      });
+      throw ServerError.create(401, "User ID is required");
     }
 
     const result = await db.getUserById(id);
 
     if (!result) {
-      throw new ServerError({
-        status: 404,
-        error: "User not found",
-      });
+      throw ServerError.create(404, "User not found");
     }
 
     return {
@@ -29,10 +23,7 @@ module.exports.getUser = async (options) => {
     if (error instanceof ServerError) {
       throw error;
     }
-    throw new ServerError({
-      status: 500,
-      error: "Failed to get user",
-    });
+    throw ServerError.create(500, "Failed to get user");
   }
 };
 
@@ -46,19 +37,13 @@ module.exports.putUser = async (options) => {
     const existingUser = await db.getUserById(options.userId);
 
     if (!existingUser) {
-      throw new ServerError({
-        status: 400,
-        error: "Could not find User in the database",
-      });
+      throw ServerError.create(400, "Could not find User in the database");
     }
 
     if (options.username && options.username !== existingUser.username) {
       const usernameExists = await db.checkUser(options.username);
       if (usernameExists) {
-        throw new ServerError({
-          status: 409,
-          error: "Username already exists",
-        });
+        throw ServerError.create(409, "Username already exists");
       }
     }
 
@@ -84,9 +69,6 @@ module.exports.putUser = async (options) => {
     if (error instanceof ServerError) {
       throw error;
     }
-    throw new ServerError({
-      status: 500,
-      error: "Failed to update user",
-    });
+    throw ServerError.create(500, "Failed to update user");
   }
 };

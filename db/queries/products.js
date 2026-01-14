@@ -20,5 +20,5 @@ module.exports.getProductById = async (productId) => {
   const params = [productId]
 
   const result = await pool.query(queryString, params);
-  return result.rows;
+  return result.rows[0];
 }

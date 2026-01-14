@@ -7,18 +7,12 @@ module.exports.register = async (options) => {
     const { username, email, password, address } = options;
 
     if (!username || !email || !password) {
-      throw new ServerError({
-        status: 400,
-        error: 'Username, email, and password are required'
-      });
+      throw ServerError.create(400, 'Username, email, and password are required');
     }
 
     const existingUser = await db.checkUser(username);
     if (existingUser) {
-      throw new ServerError({
-        status: 409,
-        error: 'Username already exists'
-      });
+      throw ServerError.create(409, 'Username already exists');
     }
 
     const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS)
@@ -37,10 +31,7 @@ module.exports.register = async (options) => {
     if (error instanceof ServerError) {
       throw error;
     }
-    throw new ServerError({
-      status: 500,
-      error: 'Failed to create user'
-    });
+    throw ServerError.create(500, 'Failed to create user');
   }
 };
 

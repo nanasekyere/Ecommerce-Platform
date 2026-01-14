@@ -5,6 +5,13 @@ class ServerError extends Error {
     this.status = args[0].status;
     this.error = args[0].error;
   }
+
+  static create (status, msg) {
+    return new ServerError({
+      status: status,
+      error: msg
+    })
+  }
 }
 
 module.exports = ServerError;

@@ -1,4 +1,3 @@
-const { param } = require("../../src/api");
 const pool = require("../pool");
 
 module.exports.checkUser = async (username) => {

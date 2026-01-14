@@ -70,53 +70,6 @@ router.post('/create-order', async (req, res, next) => {
   }
 });
 
-/**
- * Get all cart items if any
- */
-router.get('/cart', async (req, res, next) => {
-  const options = {
-  };
-
-  try {
-    const result = await user.getUserCart(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
-});
-
-/**
- * Remove product from cart by product ID
- */
-router.delete('/cart/:productId', async (req, res, next) => {
-  const options = {
-    productId: req.params['productId']
-  };
-
-  try {
-    const result = await user.deleteUserCartByProductid(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
-});
-
-/**
- * Increase/Decrease number of item in cart
- */
-router.put('/cart/:productId', async (req, res, next) => {
-  const options = {
-    body: req.body,
-    productId: req.params['productId']
-  };
-
-  try {
-    const result = await user.putUserCartByProductid(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
-});
 
 /**
  * Get all orders for the current user
