@@ -2,8 +2,7 @@ const express = require("express");
 const cartService = require("../services/cart");
 
 const router = new express.Router();
-const { requireAuth } = require("../../config/passport");
-const { use } = require("passport");
+const { requireAuth } = require('../../../config/passport');
 
 router.use(requireAuth);
 

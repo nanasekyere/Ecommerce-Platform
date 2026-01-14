@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node src/bin/www",
-    "dev": "node src/bin/www | bunyan",
+    "dev": "nodemon src/bin/www | bunyan",
     "seed": "node db/seed.js"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.2.0"
+    "@faker-js/faker": "^10.2.0",
+    "nodemon": "^3.1.11"
   }
 }

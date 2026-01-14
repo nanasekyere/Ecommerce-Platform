@@ -29,7 +29,7 @@ module.exports.getProductsByProductid = async (options) => {
   try {
     const productId = checkID(options.productId)
 
-    const product = await db.getProductsByID(productId)
+    const product = await db.getProductById(productId)
 
     if (!product) {
       throw ServerError.create(404, 'No product with id: ' + productId);
