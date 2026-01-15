@@ -62,4 +62,22 @@ router.put('/:itemId', async (req, res, next) => {
   }
 });
 
+/**
+ * Create order using items in cart
+ */
+router.post('/checkout', async (req, res, next) => {
+  const options = {
+    userId: req.user.id
+  };
+
+  try {
+    const result = await cartService.createOrder(options);
+    res.status(result.status || 200).send(result.data);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+
 module.exports = router;

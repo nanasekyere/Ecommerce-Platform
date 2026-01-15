@@ -54,22 +54,6 @@ router.delete('/', async (req, res, next) => {
   }
 });
 
-/**
- * Create order using items in cart
- */
-router.post('/create-order', async (req, res, next) => {
-  const options = {
-    body: req.body
-  };
-
-  try {
-    const result = await user.postUserCreateOrder(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
-});
-
 
 /**
  * Get all orders for the current user
