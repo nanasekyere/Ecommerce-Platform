@@ -28,7 +28,8 @@ app.use(session({
 app.use('/products', require('./routes/products'));
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
-app.use('/cart', require('./routes/cart'))
+app.use('/cart', require('./routes/cart'));
+app.use('/orders', require('./routes/orders'));
 
 // catch 404
 app.use((req, res, next) => {

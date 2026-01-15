@@ -1,7 +1,6 @@
 const ServerError = require("../../lib/error");
 const db = require("../../../db/queries/cart");
 const productDb = require("../../../db/queries/products");
-const { th, de, da } = require("@faker-js/faker");
 
 module.exports.getCart = async (userId) => {
   try {
